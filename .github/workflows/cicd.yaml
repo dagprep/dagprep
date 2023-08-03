@@ -29,10 +29,10 @@ jobs:
       run: python install poetry
 
     - name: Install dependency
-      uses: poetry install --with test
+      run: poetry install --with test
 
     - name: Run tests
-      uses: poetry run pytest
+      run: poetry run pytest
      
   # publish:
   #   needs: [test]
