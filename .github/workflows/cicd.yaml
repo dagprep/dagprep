@@ -12,6 +12,7 @@ permissions:
 jobs:
   test:
     strategy:
+      fail-fast: false
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
         python: ['3.7', '3.8', '3.9']
@@ -27,12 +28,15 @@ jobs:
         python-version: ${{ matrix.python }}
 
     - name: Install Poetry
+      working-directory: ./dagprep
       run: pip install poetry
 
     - name: Install dependency
+      working-directory: ./dagprep
       run: poetry install --with test
 
     - name: Run tests
+      working-directory: ./dagprep
       run: poetry run pytest
      
   # publish:
