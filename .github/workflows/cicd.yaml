@@ -1,0 +1,51 @@
+name: dagprep CI CD
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+        python: ['3.7', '3.8', '3.9']
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python }}
+
+    - name: Install Poetry
+      run: python install poetry
+
+    - name: Install dependency
+      uses: poetry install --with test
+
+    - name: Run tests
+      uses: poetry run pytest
+     
+  # publish:
+  #   needs: [test]
+
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #   - uses: actions/checkout@v3
+
+  #   - name: Set up Python
+  #     uses: actions/setup-python@v4
+  #     with:
+  #       python-version: 3.9
+
+  #   - name: Install dependency
+  #     uses: poetry publish --build
