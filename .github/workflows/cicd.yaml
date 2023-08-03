@@ -1,6 +1,7 @@
 name: dagprep CI CD
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
