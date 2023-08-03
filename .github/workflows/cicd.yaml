@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
-        python: ['3.7', '3.8', '3.9']
+        python: ['3.9']
 
     runs-on: ${{ matrix.os }}
 
@@ -28,7 +28,6 @@ jobs:
         python-version: ${{ matrix.python }}
 
     - name: Install Poetry
-      working-directory: ./dagprep
       run: pip install poetry
 
     - name: Install dependency
@@ -39,18 +38,27 @@ jobs:
       working-directory: ./dagprep
       run: poetry run pytest
      
-  # publish:
-  #   needs: [test]
+  publish:
+    needs: [test]
 
-  #   runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #   - uses: actions/checkout@v3
+    steps:
+      - uses: actions/checkout@v3
 
-  #   - name: Set up Python
-  #     uses: actions/setup-python@v4
-  #     with:
-  #       python-version: 3.9
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
 
-  #   - name: Install dependency
-  #     uses: poetry publish --build
+      - name: Install Poetry
+        run: pip install poetry
+
+      - name: Config pypi
+        env:
+          PYPI_API_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
+        run: poetry config pypi-token.pypi $PYPI_API_TOKEN
+
+      - name: Publishing package
+        working-directory: ./dagprep
+        run: poetry publish --build
