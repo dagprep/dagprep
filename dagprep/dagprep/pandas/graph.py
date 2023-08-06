@@ -1,5 +1,5 @@
 import networkx as nx
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import pandas as pd
 
 from dagprep.pandas.us1 import add_companies_info, fullname, upper_col, minmax
@@ -10,24 +10,24 @@ def create_dag(worker_df, companies_df):
     # INPUT NODES
     G.add_node("Workers", output=worker_df)
     
-    # G.add_node("Companies", output=companies_df)
+    G.add_node("Companies", output=companies_df)
 
     # FUNCTION NODES
     G.add_node("fullname", function=fullname)
     G.add_node("minmax", function=minmax)
-    # G.add_node("upper_col", function=upper_col)
-    # G.add_node("add_companies_info", function=add_companies_info)  
-    G.add_node("output", function= lambda x: x)
+    G.add_node("upper_col", function=upper_col)
+    G.add_node("add_companies_info", function=add_companies_info)  
 
     # EDGEs
-    G.add_edge("Workers", "fullname")
-    G.add_edge("fullname", "minmax")
-    # G.add_edge("Companies", "upper_col")
-    # G.add_edge("minmax", "add_companies_info")
-    # G.add_edge("upper_col", "add_companies_info")
+    G.add_edge("Workers", "fullname", param_key="worker_df")
+    G.add_edge("fullname", "minmax", param_key="df_worker")
+    G.add_edge("Companies", "upper_col", param_key="companies_df")
+    G.add_edge("minmax", "add_companies_info", param_key="workers_df")
+    G.add_edge("upper_col", "add_companies_info", param_key="companies_df")
 
-    # G.add_edge("add_companies_info", "output")
-    G.add_edge("minmax", "output")
+    G.add_edge("add_companies_info", "output", param_key="x")
+
+    G.add_node("output", function= lambda x: x)
 
     return G
     
@@ -50,8 +50,8 @@ def draw_dag(G):
     plt.show()
 
 if __name__ == '__main__':
-    companies_df = pd.read_csv("/home/giambrosio/projects/personal/dagprep/dagprep/dagprep/pandas/us1/data/companies.csv", index_col="Id")
-    worker_df = pd.read_csv("/home/giambrosio/projects/personal/dagprep/dagprep/dagprep/pandas/us1/data/worker.csv", index_col="Id")
+    companies_df = pd.read_csv("/Users/giuseppegrieco/Workspace/github.com/dagprep/dagprep/dagprep/dagprep/pandas/us1/data/companies.csv", index_col="Id")
+    worker_df = pd.read_csv("/Users/giuseppegrieco/Workspace/github.com/dagprep/dagprep/dagprep/dagprep/pandas/us1/data/worker.csv", index_col="Id")
     
     G = create_dag(worker_df, companies_df)
 
@@ -59,9 +59,9 @@ if __name__ == '__main__':
 
         if "output" not in G.nodes[node_label]:  
             print(f"Processing node {node_label}")
-            nodes = [z for (z, u) in G.in_edges(node_label)]
-            nodes_output = [G.nodes[node]["output"] for node in nodes]
-            G.nodes[node_label]["output"] = G.nodes[node_label]["function"](*nodes_output)
+            nodes = [(z, G.edges[(z, u)]["param_key"]) for (z, u) in G.in_edges(node_label)]
+            nodes_output = {param_key: G.nodes[node]["output"] for node, param_key in nodes}
+            G.nodes[node_label]["output"] = G.nodes[node_label]["function"](**nodes_output)
             print(G.nodes[node_label]["output"])
 
     print(G.nodes["output"]["output"])
