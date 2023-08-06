@@ -2,12 +2,15 @@
 name = "dagprep"
 version = "0.1.0"
 description = ""
-authors = ["Giuseppe Ambrosio <giuambro97@gmail>", "Giuseppe Grieco <g.grieco1997@gmail.com>", "Gerlando Re <gerlaxrex@gmail.com>"]
+authors = ["Giuseppe Ambrosio <giuambro97@gmail.com>", "Giuseppe Grieco <g.grieco1997@gmail.com>", "Gerlando Re <gerlaxrex@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.9"
 
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.4.0"
 
 [build-system]
 requires = ["poetry-core"]
