@@ -7,10 +7,15 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.9"
+networkx = "^3.1"
 
 
 [tool.poetry.group.test.dependencies]
 pytest = "^7.4.0"
+
+
+[tool.poetry.group.pandas.dependencies]
+pandas = "^2.0.3"
 
 [build-system]
 requires = ["poetry-core"]
