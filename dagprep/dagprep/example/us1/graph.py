@@ -1,8 +1,8 @@
 import networkx as nx
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 import pandas as pd
 
-from dagprep.pandas.us1 import add_companies_info, fullname, upper_col, minmax
+from dagprep.example.us1.us1 import add_companies_info, fullname, upper_col, minmax
 
 def create_dag(worker_df, companies_df):
     G = nx.DiGraph()

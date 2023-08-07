@@ -21,13 +21,15 @@ def add_companies_info(workers_df, companies_df):
 
 
 if __name__ == '__main__':
-    companies_df = pd.read_csv("./us1/data/companies.csv", index_col="Id")
-    worker_df = pd.read_csv("./us1/data/worker.csv", index_col="Id")
-    fullname(worker_df)
-    minmax(worker_df)
-    # print(worker_df)
-    upper_col(companies_df, "Name")
-    # print(companies_df)
-    out_df = add_companies_info(worker_df, companies_df)
-    print(out_df)
+    # companies_df = pd.read_csv("./us1/data/companies.csv", index_col="Id")
+    # worker_df = pd.read_csv("./us1/data/worker.csv", index_col="Id")
+    # fullname(worker_df)
+    # minmax(worker_df)
+    # # print(worker_df)
+    # upper_col(companies_df, "Name")
+    # # print(companies_df)
+    # out_df = add_companies_info(worker_df, companies_df)
+    # print(out_df)
 
+    import inspect
+    print(inspect.getfullargspec(add_companies_info).args)
