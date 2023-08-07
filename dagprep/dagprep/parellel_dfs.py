@@ -79,30 +79,30 @@ def d_func(input_a, input_c):
     return f"Function A executed with inputs {input_a} and {input_c}"
 
 # Example usage
-dagprep = nx.DiGraph()
-dagprep.add_node("A", function=a_func)
-dagprep.add_node("B1", function=bi_func)
-dagprep.add_node("B2", function=bi_func)
-dagprep.add_node("B3", function=bi_func)
-dagprep.add_node("B4", function=bi_func)
-dagprep.add_node("B", function=b_func)
-dagprep.add_node("C", function=c_func)
-dagprep.add_node("D", function=d_func)
+dagprep_ = nx.DiGraph()
+dagprep_.add_node("A", function=a_func)
+dagprep_.add_node("B1", function=bi_func)
+dagprep_.add_node("B2", function=bi_func)
+dagprep_.add_node("B3", function=bi_func)
+dagprep_.add_node("B4", function=bi_func)
+dagprep_.add_node("B", function=b_func)
+dagprep_.add_node("C", function=c_func)
+dagprep_.add_node("D", function=d_func)
 
-dagprep.add_edge("B1", "B", param_key="input_b1")
-dagprep.add_edge("B2", "B", param_key="input_b2")
-dagprep.add_edge("B3", "B", param_key="input_b3")
-dagprep.add_edge("B4", "B", param_key="input_b4")
-dagprep.add_edge("B", "A", param_key="input_b")
-dagprep.add_edge("C", "A", param_key="input_c")
-dagprep.add_edge("A", "D", param_key="input_a")
-dagprep.add_edge("C", "D", param_key="input_c")
+dagprep_.add_edge("B1", "B", param_key="input_b1")
+dagprep_.add_edge("B2", "B", param_key="input_b2")
+dagprep_.add_edge("B3", "B", param_key="input_b3")
+dagprep_.add_edge("B4", "B", param_key="input_b4")
+dagprep_.add_edge("B", "A", param_key="input_b")
+dagprep_.add_edge("C", "A", param_key="input_c")
+dagprep_.add_edge("A", "D", param_key="input_a")
+dagprep_.add_edge("C", "D", param_key="input_c")
 
 
 n_threads_list = [1, 2, 4, 8]
 times_result = []
 for n_threads in n_threads_list:
-    time_ = traverse_dag_with_functions_parallel(dagprep, n_threads=n_threads)
+    time_ = traverse_dag_with_functions_parallel(dagprep_, n_threads=n_threads)
     times_result.append(time_)
 
 logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
