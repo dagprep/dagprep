@@ -1,7 +1,7 @@
-from dagprep.pipeline.transformation import Transformation
+from dagprep.pipeline.steps.transformation import Transformation
 
 
-class Data():
+class DataSource():
     def __init__(self, 
         name: str, 
         data,
@@ -22,7 +22,7 @@ class Data():
         return transformation
     
     def is_ready(self):
-        return self.depends_counter == len(self.successors)
+        return True
     
     def visit(self):
         for _, out_trasformation in self.successors.items():
