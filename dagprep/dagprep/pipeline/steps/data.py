@@ -14,8 +14,6 @@ class DataSource():
         self.output = self.data
         self.notes = notes
 
-        self.depends_counter = 0
-
     def chain(self, transformation: Transformation, param_key: str) -> "Transformation":
         self.successors[param_key] = transformation
         transformation.depends_on[param_key] = self
@@ -24,11 +22,5 @@ class DataSource():
     def is_ready(self):
         return True
     
-    def visit(self):
-        for _, out_trasformation in self.successors.items():
-            out_trasformation.depends_counter += 1
-    
     def exec(self):
-        for _, out_trasformation in self.successors.items():
-            out_trasformation.depends_counter += 1
         return self.data

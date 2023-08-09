@@ -16,9 +16,6 @@ class Transformation():
         self.output = None
         self.notes = notes
 
-        self.depends_counter = 0
-
-
     def chain(self, transformation: "Transformation", param_key: str) -> "Transformation":
         self.successors[param_key] = transformation
         transformation.depends_on[param_key] = self
