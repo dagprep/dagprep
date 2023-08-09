@@ -17,19 +17,21 @@ def upper_col(companies_df):
 
 def add_companies_info(workers_df, companies_df): 
     return pd.merge(workers_df, companies_df, left_on=["CompanyId"], right_on=["Id"], how="left")
-    
+
+def select_cols(workers_companies_df):
+    cols_to_keep = ['Salary', 'CompanyId', 'Fullname', 'SalaryNormalized', 'Name_y', 'NameUpper']
+    return workers_companies_df[cols_to_keep]
 
 
 if __name__ == '__main__':
-    # companies_df = pd.read_csv("./us1/data/companies.csv", index_col="Id")
-    # worker_df = pd.read_csv("./us1/data/worker.csv", index_col="Id")
-    # fullname(worker_df)
-    # minmax(worker_df)
-    # # print(worker_df)
-    # upper_col(companies_df, "Name")
-    # # print(companies_df)
-    # out_df = add_companies_info(worker_df, companies_df)
-    # print(out_df)
+    companies_df = pd.read_csv("/home/giambrosio/projects/personal/dagprep/dagprep/dagprep/example/us1/data/companies.csv", index_col="Id")
+    worker_df = pd.read_csv("/home/giambrosio/projects/personal/dagprep/dagprep/dagprep/example/us1/data/worker.csv", index_col="Id")
+    fullname(worker_df)
+    minmax(worker_df)
+    # print(worker_df)
+    upper_col(companies_df)
+    # print(companies_df)
+    workers_companies_df = add_companies_info(worker_df, companies_df)
+    out_df = select_cols(workers_companies_df)
+    print(out_df)
 
-    import inspect
-    print(inspect.getfullargspec(add_companies_info).args)
