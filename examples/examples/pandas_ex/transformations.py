@@ -21,17 +21,3 @@ def add_companies_info(workers_df, companies_df):
 def select_cols(workers_companies_df):
     cols_to_keep = ['Salary', 'CompanyId', 'Fullname', 'SalaryNormalized', 'Name_y', 'NameUpper']
     return workers_companies_df[cols_to_keep]
-
-
-if __name__ == '__main__':
-    companies_df = pd.read_csv("/home/giambrosio/projects/personal/dagprep/dagprep/dagprep/example/us1/data/companies.csv", index_col="Id")
-    worker_df = pd.read_csv("/home/giambrosio/projects/personal/dagprep/dagprep/dagprep/example/us1/data/worker.csv", index_col="Id")
-    fullname(worker_df)
-    minmax(worker_df)
-    # print(worker_df)
-    upper_col(companies_df)
-    # print(companies_df)
-    workers_companies_df = add_companies_info(worker_df, companies_df)
-    out_df = select_cols(workers_companies_df)
-    print(out_df)
-

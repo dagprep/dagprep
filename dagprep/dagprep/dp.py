@@ -48,32 +48,3 @@ class DagPrep():
             self.__process_node(node_label_to_process)
 
         return self._digraph.nodes[OUTPUT_NODE_LABEL][OUTPUT_LABEL]
-    
-
-if __name__ == "__main__":
-    companies_df = pd.read_csv("/home/giambrosio/projects/personal/dagprep/dagprep/dagprep/example/us1/data/companies.csv", index_col="Id")
-    worker_df = pd.read_csv("/home/giambrosio/projects/personal/dagprep/dagprep/dagprep/example/us1/data/worker.csv", index_col="Id")
-    
-    dagprep = DagPrep()
-
-    dagprep.add_source_node("Workers", data=worker_df)
-    dagprep.add_source_node("Companies", data=companies_df)
-
-    dagprep.add_processing_node("fullname", function=fullname)
-    dagprep.add_processing_node("minmax", function=minmax)
-    dagprep.add_processing_node("upper_col", function=upper_col)
-    dagprep.add_processing_node("add_companies_info", function=add_companies_info)
-
-    # EDGEs
-    dagprep.add_edge("Workers", "fullname", param_key="worker_df")
-    dagprep.add_edge("fullname", "minmax", param_key="df_worker")
-    dagprep.add_edge("Companies", "upper_col", param_key="companies_df")
-    dagprep.add_edge("minmax", "add_companies_info", param_key="workers_df")
-    dagprep.add_edge("upper_col", "add_companies_info", param_key="companies_df")
-
-    dagprep.add_edge("add_companies_info", "output", param_key="x")
-    
-
-    output = dagprep.execute()
-
-    print(output)
