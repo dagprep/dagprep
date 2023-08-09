@@ -2,7 +2,9 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import pandas as pd
 
-from dagprep.example.us1.us1 import add_companies_info, fullname, upper_col, minmax
+from examples.pandas_ex.transformations import add_companies_info, fullname, upper_col, minmax
+
+from examples.pandas_ex import COMPANIES_DF_LOCATION, WORKER_DF_LOCATION
 
 def create_dag(worker_df, companies_df):
     G = nx.DiGraph()
@@ -50,8 +52,8 @@ def draw_dag(G):
     plt.show()
 
 if __name__ == '__main__':
-    companies_df = pd.read_csv("/Users/giuseppegrieco/Workspace/github.com/dagprep/dagprep/dagprep/dagprep/pandas/us1/data/companies.csv", index_col="Id")
-    worker_df = pd.read_csv("/Users/giuseppegrieco/Workspace/github.com/dagprep/dagprep/dagprep/dagprep/pandas/us1/data/worker.csv", index_col="Id")
+    companies_df = pd.read_csv(COMPANIES_DF_LOCATION, index_col="Id")
+    worker_df = pd.read_csv(WORKER_DF_LOCATION, index_col="Id")
     
     G = create_dag(worker_df, companies_df)
 
