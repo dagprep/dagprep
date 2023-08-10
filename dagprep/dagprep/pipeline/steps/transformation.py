@@ -29,13 +29,7 @@ class Transformation():
         self.depends_on[param_key2] = transformation2
 
         return self
-    
-    def is_ready(self):
-        for _, in_trasformation in self.depends_on.items():
-            if in_trasformation.output is None:
-                return False
-        return True
-    
+
    
     def exec(self):
         kwargs = {}

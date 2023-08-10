@@ -162,7 +162,7 @@ description = ""
 optional = false
 python-versions = "^3.9"
 files = []
-develop = false
+develop = true
 
 [package.dependencies]
 matplotlib = "^3.7.2"
@@ -797,4 +797,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "bec49dd483eddc8a21163980115b040e0518060b46e5b2c6d339624b8e2933da"
+content-hash = "ee1932ed5830a4223ffdc274b07436958b902a722393cb74f7d206c576d79eaf"
