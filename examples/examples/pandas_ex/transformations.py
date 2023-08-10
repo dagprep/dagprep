@@ -18,8 +18,15 @@ def upper_col(companies_df):
 def add_companies_info(workers_df, companies_df): 
     return pd.merge(workers_df, companies_df, left_on=["CompanyId"], right_on=["Id"], how="left")
 
+def add_cities_info(workers_df, cities_df):
+    return pd.merge(workers_df, cities_df, left_on=["CityId"], right_on=["Id"], how="left")
+
+def add_info(workers_df, companies_df, cities_df): 
+    workers_df = pd.merge(workers_df, companies_df, left_on=["CompanyId"], right_on=["Id"], how="left")
+    return pd.merge(workers_df, cities_df, left_on=["CityId"], right_on=["Id"], how="left")
+
 def select_cols(workers_companies_df):
-    cols_to_keep = ['Salary', 'CompanyId', 'Fullname', 'SalaryNormalized', 'Name_y', 'NameUpper']
+    cols_to_keep = ['Salary', 'CompanyId', 'Fullname', 'SalaryNormalized', 'Name_y', 'NameUpper', "CityName"]
     return workers_companies_df[cols_to_keep]
 
 def identity_function(workers_companies_df):
