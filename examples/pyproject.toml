@@ -8,7 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.9"
 pandas = "^2.0.3"
-dagprep = { path = "../dagprep" }
+dagprep = {path = "../dagprep", develop = true}
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.7.0"

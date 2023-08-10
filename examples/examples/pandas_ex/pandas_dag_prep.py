@@ -1,9 +1,10 @@
 from examples.pandas_ex import WORKER_DF_LOCATION, COMPANIES_DF_LOCATION
 
 import pandas as pd
-from examples.pandas_ex.transformations import fullname, minmax, select_cols, upper_col, add_companies_info
+from examples.pandas_ex.transformations import fullname, identity_function, minmax, select_cols, upper_col, add_companies_info
 from dagprep.pipeline.steps.data import DataSource
 from dagprep.pipeline.pipeline import Pipeline
+from dagprep.pipeline.pipeline_explorer import PipelineExplorer
 from dagprep.pipeline.steps.transformation import Transformation
 
 
@@ -29,7 +30,15 @@ if __name__ == '__main__':
     )
 
     select_cols_tf = Transformation(select_cols)
-    add_companies_info_tf.chain(select_cols_tf, param_key="workers_companies_df")
+    output_pipeline = Transformation(identity_function, name="output_pipeline")
+    (add_companies_info_tf
+     .chain(select_cols_tf, param_key="workers_companies_df")
+     .chain(output_pipeline, param_key="workers_companies_df"))
     
-    pipeline = Pipeline([worker_data, companies_data])
-    print(pipeline.exec())
+    # pipeline = Pipeline([worker_data, companies_data])
+    # print(pipeline.exec())
+
+    pe = Pipeline([worker_data, companies_data])
+    print(pe.get_execution_plan())
+
+    print(pe.exec())

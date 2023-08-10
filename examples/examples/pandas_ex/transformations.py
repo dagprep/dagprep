@@ -21,3 +21,6 @@ def add_companies_info(workers_df, companies_df):
 def select_cols(workers_companies_df):
     cols_to_keep = ['Salary', 'CompanyId', 'Fullname', 'SalaryNormalized', 'Name_y', 'NameUpper']
     return workers_companies_df[cols_to_keep]
+
+def identity_function(workers_companies_df):
+    return workers_companies_df

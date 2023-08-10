@@ -19,8 +19,5 @@ class DataSource():
         transformation.depends_on[param_key] = self
         return transformation
     
-    def is_ready(self):
-        return True
-    
     def exec(self):
         return self.data
