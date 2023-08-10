@@ -3,7 +3,6 @@ import networkx as nx
 import pandas as pd
 import inspect
 import logging
-from dagprep.example.us1.us1 import fullname, minmax, upper_col, add_companies_info
 
 logger = logging.getLogger(__name__)
 
