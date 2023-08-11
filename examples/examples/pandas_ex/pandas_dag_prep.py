@@ -5,6 +5,7 @@ from examples.pandas_ex.transformations import fullname, identity_function, minm
 from dagprep.pipeline.steps.data_source import DataSource
 from dagprep.pipeline.pipeline import Pipeline
 from dagprep.pipeline.steps.transformation import Transformation
+from dagprep.pipeline.find_data_sources import find_data_sources
 
 
 if __name__ == '__main__':
@@ -37,7 +38,11 @@ if __name__ == '__main__':
      .chain(select_cols_tf, param_key="workers_companies_df")
      .chain(output_pipeline, param_key="workers_companies_df"))
 
-    pp = Pipeline([worker_data, companies_data, cities_data])
-    print(pp.get_execution_plan())
+    # pp = Pipeline([worker_data, companies_data, cities_data])
+    # print(pp.get_execution_plan())
 
-    print(pp.exec())
+    # print(pp.exec())
+
+    data_sinks = [output_pipeline]
+    data_sources = find_data_sources(data_sinks)
+    print([ds.name for ds in data_sources])
