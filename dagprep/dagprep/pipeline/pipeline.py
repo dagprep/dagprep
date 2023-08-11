@@ -4,6 +4,7 @@ from typing import Any
 from dagprep.pipeline.action_fn import exec, visit
 from dagprep.pipeline.pipeline_explorer import PipelineExplorer
 from dagprep.pipeline.steps.data_source import DataSource
+import networkx as nx
 
 logger = logging.getLogger(__name__)
 
@@ -18,3 +19,6 @@ class Pipeline:
 
     def get_execution_plan(self) -> list[str]:
         return self.pe.explore(visit, [])
+    
+    def to_digraph(self) -> nx.DiGraph:
+        raise NotImplementedError()
