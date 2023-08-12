@@ -1,7 +1,7 @@
 from typing import Callable
 
 
-class Transformation():
+class Transformation:
     def __init__(self, 
         function_: Callable, 
         name: str = None, 

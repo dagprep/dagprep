@@ -2,10 +2,10 @@ from examples.pandas_ex import CITIES_DF_LOCATION, WORKER_DF_LOCATION, COMPANIES
 
 import pandas as pd
 from examples.pandas_ex.transformations import fullname, identity_function, minmax, select_cols, upper_col, add_companies_info, add_cities_info, add_info
-from dagprep.pipeline.steps.data import DataSource
+from dagprep.pipeline.steps.data_source import DataSource
 from dagprep.pipeline.pipeline import Pipeline
-from dagprep.pipeline.pipeline_explorer import PipelineExplorer
 from dagprep.pipeline.steps.transformation import Transformation
+from dagprep.pipeline.find_data_sources import find_data_sources
 
 
 if __name__ == '__main__':
@@ -37,11 +37,12 @@ if __name__ == '__main__':
     (add_info_tf
      .chain(select_cols_tf, param_key="workers_companies_df")
      .chain(output_pipeline, param_key="workers_companies_df"))
-    
-    # pipeline = Pipeline([worker_data, companies_data])
-    # print(pipeline.exec())
 
-    pe = Pipeline([worker_data, companies_data, cities_data])
-    print(pe.get_execution_plan())
+    # pp = Pipeline([worker_data, companies_data, cities_data])
+    # print(pp.get_execution_plan())
 
-    print(pe.exec())
+    # print(pp.exec())
+
+    data_sinks = [output_pipeline]
+    data_sources = find_data_sources(data_sinks)
+    print([ds.name for ds in data_sources])
