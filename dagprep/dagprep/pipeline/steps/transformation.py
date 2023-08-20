@@ -1,7 +1,7 @@
 from typing import Callable
 
 
-class Transformation():
+class Transformation:
     def __init__(self, 
         function_: Callable, 
         name: str = None, 
@@ -21,15 +21,12 @@ class Transformation():
         transformation.depends_on[param_key] = self
         return transformation
     
-    def merge(self, transformation1: "Transformation", param_key1: str, transformation2: "Transformation", param_key2: str):
-        transformation1.successors[param_key1] = self
-        transformation2.successors[param_key2] = self
-
-        self.depends_on[param_key1] = transformation1
-        self.depends_on[param_key2] = transformation2
+    def merge(self, transformations: list[tuple["Transformation", str]]) -> "Transformation":
+        for tf, param_key in transformations:
+            tf.successors[param_key] = self
+            self.depends_on[param_key] = tf
 
         return self
-
    
     def exec(self):
         kwargs = {}

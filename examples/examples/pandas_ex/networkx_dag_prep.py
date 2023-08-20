@@ -4,9 +4,29 @@ import pandas as pd
 from examples.pandas_ex.transformations import fullname, identity_function, minmax, select_cols, upper_col, add_companies_info, add_cities_info, add_info
 from dagprep.pipeline.steps.data_source import DataSource
 from dagprep.pipeline.pipeline import Pipeline
+from dagprep.pipeline.pipeline_explorer import PipelineExplorer
 from dagprep.pipeline.steps.transformation import Transformation
-from dagprep.pipeline.find_data_sources import find_data_sources
 
+import networkx as nx
+import matplotlib.pyplot as plt
+
+def draw_dag(G):
+    # Create the figure and axis
+    fig, ax = plt.subplots()
+
+    # Draw the graph nodes with labels
+    pos = nx.spring_layout(G)  # You can use different layout algorithms here
+    nx.draw_networkx_nodes(G, pos, ax=ax)
+    nx.draw_networkx_labels(G, pos, labels={node: node for node in G.nodes()}, ax=ax)
+
+    # Draw the edges
+    nx.draw_networkx_edges(G, pos, ax=ax)
+
+    # Save the graph visualization to a file
+    fig.savefig("graph.png")
+
+    # Display the graph visualization
+    plt.show()
 
 if __name__ == '__main__':
     worker_df = pd.read_csv(WORKER_DF_LOCATION, index_col="Id")
@@ -37,12 +57,14 @@ if __name__ == '__main__':
     (add_info_tf
      .chain(select_cols_tf, param_key="workers_companies_df")
      .chain(output_pipeline, param_key="workers_companies_df"))
+    
+    # pipeline = Pipeline([worker_data, companies_data])
+    # print(pipeline.exec())
 
-    # pp = Pipeline([worker_data, companies_data, cities_data])
-    # print(pp.get_execution_plan())
+    pe = Pipeline([worker_data, companies_data, cities_data])
+    #print(pe.get_execution_plan())
 
-    # print(pp.exec())
+    g = pe.to_networkx()
+    draw_dag(g)
 
-    data_sinks = [output_pipeline]
-    data_sources = find_data_sources(data_sinks)
-    print([ds.name for ds in data_sources])
+    #print(pe.exec())

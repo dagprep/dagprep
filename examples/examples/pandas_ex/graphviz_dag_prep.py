@@ -1,12 +1,10 @@
-from examples.pandas_ex import CITIES_DF_LOCATION, WORKER_DF_LOCATION, COMPANIES_DF_LOCATION
-
 import pandas as pd
-from examples.pandas_ex.transformations import fullname, identity_function, minmax, select_cols, upper_col, add_companies_info, add_cities_info, add_info
-from dagprep.pipeline.steps.data_source import DataSource
 from dagprep.pipeline.pipeline import Pipeline
+from dagprep.pipeline.steps.data_source import DataSource
 from dagprep.pipeline.steps.transformation import Transformation
-from dagprep.pipeline.find_data_sources import find_data_sources
 
+from examples.pandas_ex import CITIES_DF_LOCATION, COMPANIES_DF_LOCATION, WORKER_DF_LOCATION
+from examples.pandas_ex.transformations import add_info, fullname, identity_function, minmax, select_cols, upper_col
 
 if __name__ == '__main__':
     worker_df = pd.read_csv(WORKER_DF_LOCATION, index_col="Id")
@@ -37,12 +35,14 @@ if __name__ == '__main__':
     (add_info_tf
      .chain(select_cols_tf, param_key="workers_companies_df")
      .chain(output_pipeline, param_key="workers_companies_df"))
+    
+    # pipeline = Pipeline([worker_data, companies_data])
+    # print(pipeline.exec())
 
-    # pp = Pipeline([worker_data, companies_data, cities_data])
-    # print(pp.get_execution_plan())
+    pe = Pipeline([worker_data, companies_data, cities_data])
+    #print(pe.get_execution_plan())
 
-    # print(pp.exec())
+    g = pe.to_graphviz_digraph(name='DAG Example', filename='dag_example', format='png')
+    g.render()
 
-    data_sinks = [output_pipeline]
-    data_sources = find_data_sources(data_sinks)
-    print([ds.name for ds in data_sources])
+    #print(pe.exec())

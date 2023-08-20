@@ -1,7 +1,7 @@
 from dagprep.pipeline.steps.transformation import Transformation
 
 
-class DataSource():
+class DataSource:
     def __init__(self, 
         name: str, 
         data,
