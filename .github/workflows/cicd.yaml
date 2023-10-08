@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
-        python: ['3.9']
+        python: ['3.8', '3.9', '3.10', '3.11']
 
     runs-on: ${{ matrix.os }}
 
@@ -40,6 +40,7 @@ jobs:
      
   publish:
     needs: [test]
+    if: github.ref == 'refs/heads/master'
 
     runs-on: ubuntu-latest
 
@@ -49,7 +50,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: 3.8
 
       - name: Install Poetry
         run: pip install poetry
@@ -59,6 +60,10 @@ jobs:
           PYPI_API_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
         run: poetry config pypi-token.pypi $PYPI_API_TOKEN
 
-      - name: Publishing package
-        working-directory: ./dagprep
-        run: poetry publish --build
+      - name: Release the package
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+            git config user.name github-actions
+            git config user.email github-actions@github.com
+            poetry run semantic-release publish

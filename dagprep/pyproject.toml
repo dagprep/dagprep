@@ -5,6 +5,17 @@ description = ""
 authors = ["Giuseppe Ambrosio <giuambro97@gmail.com>", "Giuseppe Grieco <g.grieco1997@gmail.com>", "Gerlando Re <gerlaxrex@gmail.com>"]
 readme = "README.md"
 
+[tool.semantic_release]
+version_variable = "pyproject.toml:version"
+branch = "master"
+changelog_file = "CHANGELOG.md"
+build_command = "poetry build"
+dist_path = "dist/"
+upload_to_release = true
+upload_to_pypi = true
+remove_dist = false
+patch_without_tag = true
+
 [tool.poetry.dependencies]
 python = "^3.9"
 networkx = "^3.1"
