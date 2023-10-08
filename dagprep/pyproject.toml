@@ -5,6 +5,10 @@ description = ""
 authors = ["Giuseppe Ambrosio <giuambro97@gmail.com>", "Giuseppe Grieco <g.grieco1997@gmail.com>", "Gerlando Re <gerlaxrex@gmail.com>"]
 readme = "README.md"
 
+[tool.semantic_release.branches.main]
+match = "(master|feat/cicd_release)"
+prerelease = false
+
 [tool.semantic_release]
 version_variable = "pyproject.toml:version"
 branch = "feat/cicd_release"
