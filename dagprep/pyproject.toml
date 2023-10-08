@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "dagprep"
+version = "1.0.0"
+description = ""
+authors = ["Giuseppe Ambrosio <giuambro97@gmail.com>", "Giuseppe Grieco <g.grieco1997@gmail.com>", "Gerlando Re <gerlaxrex@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+networkx = "^3.1"
+matplotlib = "^3.7.2"
+graphviz = "^0.20.1"
+
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.4.0"
+
+
+[tool.poetry.group.pandas.dependencies]
+pandas = "^2.0.3"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.7.0"
+mypy = "^1.4.1"
+autoflake = "^2.2.0"
+isort = "^5.12.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
