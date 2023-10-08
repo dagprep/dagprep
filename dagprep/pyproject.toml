@@ -6,7 +6,7 @@ authors = ["Giuseppe Ambrosio <giuambro97@gmail.com>", "Giuseppe Grieco <g.griec
 readme = "README.md"
 
 [tool.semantic_release.branches.main]
-match = "(master|feat/cicd_release)"
+match = "(feat/cicd_release)"
 prerelease = false
 
 [tool.semantic_release]
