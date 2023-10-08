@@ -1,15 +1,16 @@
-from typing import Callable, Dict
-from dagprep.pipeline.steps.transformation import Transformation
+from typing import TypeVar, Generic, Callable, Dict
+from dagprep.core.base.transformation import Transformation
 
+T = TypeVar('T')
 
-class DataSource:
+class DataSource(Generic[T]):
     def __init__(self, 
-        name: str, 
-        data,
+        data: T,
+        name: str = None, 
         notes: str = None
     ) -> None:
-        self.name = name
         self.data = data
+        self.name = name or data.__name__
         self.successors: Dict[str, "Transformation"] = {}
         self.output = self.data
         self.notes = notes
@@ -22,5 +23,6 @@ class DataSource:
         transformation.depends_on[param_key] = self
         return transformation
     
-    def exec(self):
+    def exec(self) -> T:
         return self.data
+   

@@ -2,7 +2,7 @@ import logging
 from typing import Any, Callable, Dict, List, TypeVar
 
 import networkx as nx
-from dagprep.pipeline.steps.transformation import Transformation
+from dagprep.core.base.transformation import Transformation
 from graphviz import Digraph
 
 logger = logging.getLogger(__name__)

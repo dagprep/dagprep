@@ -2,9 +2,9 @@ import logging
 from typing import Any, Dict, List
 
 import networkx as nx
-from dagprep.pipeline.action_fn import exec, visit, visit_graphviz, visit_nx
-from dagprep.pipeline.pipeline_explorer import PipelineExplorer
-from dagprep.pipeline.steps.data_source import DataSource
+from dagprep.core.explorer.action_fn import exec, visit, visit_graphviz, visit_nx
+from dagprep.core.explorer.pipeline_explorer import PipelineExplorer
+from dagprep.core.base.data_source import DataSource
 from graphviz import Digraph
 
 logger = logging.getLogger(__name__)

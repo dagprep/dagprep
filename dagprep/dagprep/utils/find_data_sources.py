@@ -1,7 +1,7 @@
 import logging
 from typing import List
-from dagprep.pipeline.steps.data_source import DataSource
-from dagprep.pipeline.steps.transformation import Transformation
+from dagprep.core.base.data_source import DataSource
+from dagprep.core.base.transformation import Transformation
 
 logger = logging.getLogger(__name__)
 

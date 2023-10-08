@@ -1,5 +1,5 @@
 from typing import List
-from dagprep.pipeline.steps.transformation import Transformation
+from dagprep.core.base.transformation import Transformation
 
 
 class CounterValue:

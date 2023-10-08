@@ -9,9 +9,9 @@ def minmax(df_worker):
     df_worker["SalaryNormalized"]  = (df_worker["Salary"] - df_worker["Salary"].min()) / (df_worker["Salary"].max() - df_worker["Salary"].min()) 
     return df_worker
 
-def upper_col(companies_df):
-    upper_col_new_name = "NameUpper"
-    companies_df[upper_col_new_name] = companies_df["Name"].str.upper()
+def upper_col(companies_df, col_to_upper):
+    upper_col_new_name = f"{col_to_upper}Upper"
+    companies_df[upper_col_new_name] = companies_df[col_to_upper].str.upper()
     return companies_df
 
 
