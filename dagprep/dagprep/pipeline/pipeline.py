@@ -1,5 +1,5 @@
 import logging
-from typing import Any
+from typing import Any, Dict, List
 
 import networkx as nx
 from dagprep.pipeline.action_fn import exec, visit, visit_graphviz, visit_nx
@@ -11,14 +11,14 @@ logger = logging.getLogger(__name__)
 
 
 class Pipeline:
-    def __init__(self, data_sources: list[DataSource]):
+    def __init__(self, data_sources: List[DataSource]) -> None:
         self.data_sources = data_sources
         self.pe = PipelineExplorer(self.data_sources)
 
-    def exec(self) -> dict[str, Any]:
+    def exec(self) -> Dict[str, Any]:
         return self.pe.explore(exec, {})
 
-    def get_execution_plan(self) -> list[str]:
+    def get_execution_plan(self) -> List[str]:
         return self.pe.explore(visit, [])
 
     def to_networkx(self) -> nx.DiGraph:
