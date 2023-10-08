@@ -1,35 +1,32 @@
-from typing import Callable
+from typing import Callable, Dict
+import copy
 
 
 class Transformation:
-    def __init__(self, 
-        function_: Callable, 
-        name: str = None, 
-        depends_on: dict[str, "Transformation"] = None, 
-        successors: dict[str, "Transformation"] = None, 
-        notes: str = None
+    def __init__(
+        self, function_: Callable, name: str = None, notes: str = None, **tf_kwargs
     ) -> None:
         self.function_ = function_
         self.name = name or function_.__name__
-        self.depends_on = depends_on or {}
-        self.successors = successors or {}
-        self.output = None
         self.notes = notes
+        self.tf_kwargs = tf_kwargs
 
-    def chain(self, transformation: "Transformation", param_key: str) -> "Transformation":
+        self.depends_on: Dict[str, "Transformation"] = {}
+        self.successors: Dict[str, "Transformation"] = {}
+        self.output = None
+
+    def chain(
+        self, transformation: "Transformation", param_key: str
+    ) -> "Transformation":
+        if isinstance(transformation, Callable):
+            transformation = Transformation(transformation)
+
         self.successors[param_key] = transformation
         transformation.depends_on[param_key] = self
         return transformation
-    
-    def merge(self, transformations: list[tuple["Transformation", str]]) -> "Transformation":
-        for tf, param_key in transformations:
-            tf.successors[param_key] = self
-            self.depends_on[param_key] = tf
 
-        return self
-   
     def exec(self):
-        kwargs = {}
+        kwargs = copy.deepcopy(self.tf_kwargs)
         for param_key, in_trasformation in self.depends_on.items():
             if in_trasformation.output is None:
                 raise RuntimeError(
@@ -39,6 +36,3 @@ class Transformation:
 
         self.output = self.function_(**kwargs)
         return self.output
-
-
-
